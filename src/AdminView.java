@@ -11,8 +11,7 @@ public class AdminView implements IAdminView {
 	 * @param adminId
 	 */
 	public AdminView(Long adminId) {
-		// TODO - implement AdminView.AdminView
-		throw new UnsupportedOperationException();
+		this.adminId = adminId;
 	}
 
 	public void createOrder() {
