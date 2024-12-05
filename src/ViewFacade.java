@@ -11,18 +11,18 @@ public class ViewFacade {
 	 * @param adminId
 	 */
 	public ViewFacade(Long clientId, Long driverId, Long adminId) {
-		// TODO - implement ViewFacade.ViewFacade
-		throw new UnsupportedOperationException();
+		clientView = new ClientView(clientId);
+		driverView = new DriverView(driverId);
+		adminView = new AdminView(adminId);
 	}
 
 	public void initializeOrder() {
-		// TODO - implement ViewFacade.initializeOrder
-		throw new UnsupportedOperationException();
+		clientView.initializeOrder();
+		//adminView.createOrder();
 	}
 
 	public void reportProgress() {
-		// TODO - implement ViewFacade.reportProgress
-		throw new UnsupportedOperationException();
+		driverView.reportProgress();
 	}
 
 }

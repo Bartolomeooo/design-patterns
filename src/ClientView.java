@@ -1,21 +1,24 @@
+import javax.management.Notification;
+import java.time.LocalDateTime;
+
 public class ClientView implements IClientView, NotificationListener {
 
 	private Long clientId;
-	private IOrderController orderController;
+	private IOrderController orderController = new OrderController();;
 
 	public void initializeOrder() {
-		// TODO - implement ClientView.initializeOrder
-		throw new UnsupportedOperationException();
+		orderController.initializeOrder(clientId, enterOrderDetails());
 	}
 
 	private OrderDetails enterOrderDetails() {
-		// TODO - implement ClientView.enterOrderDetails
-		throw new UnsupportedOperationException();
+		LocalDateTime pickupTime = LocalDateTime.of(2025, 5, 3, 15, 0);
+		LocalDateTime delvieryTime = LocalDateTime.of(2025, 5, 3, 12, 0);
+
+        return new OrderDetails("Opole", "Wrocław", "Liquid", pickupTime, delvieryTime, 1000.0);
 	}
 
 	private boolean verifyOrderDetails() {
-		// TODO - implement ClientView.verifyOrderDetails
-		throw new UnsupportedOperationException();
+		return true; // TODO - implement the logic
 	}
 
 	private void displayError() {
@@ -28,17 +31,17 @@ public class ClientView implements IClientView, NotificationListener {
 	 * @param clientId
 	 */
 	public ClientView(Long clientId) {
-		// TODO - implement ClientView.ClientView
-		throw new UnsupportedOperationException();
+		this.clientId = clientId;
 	}
 
 	/**
-	 * 
+	 *
 	 * @param notification
 	 */
+	@Override
 	public void notify(Notification notification) {
-		// TODO - implement ClientView.notify
-		throw new UnsupportedOperationException();
+
 	}
+
 
 }

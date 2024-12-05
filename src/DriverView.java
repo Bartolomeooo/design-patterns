@@ -8,8 +8,7 @@ public class DriverView implements IDriverView {
 	 * @param driverId
 	 */
 	public DriverView(Long driverId) {
-		// TODO - implement DriverView.DriverView
-		throw new UnsupportedOperationException();
+		this.driverId = driverId;
 	}
 
 	public void reportProgress() {
