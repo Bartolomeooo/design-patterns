@@ -1,12 +1,13 @@
-public class ClientDAO implements DAO<Client> {
+import java.util.Map;
 
+public class ClientDAO implements DAO<Client> {
+	private final Map<Long, Client> clients = InMemoryDataStore.getInstance().getClients();
 	/**
 	 * 
 	 * @param clientId
 	 */
 	public Client findById(Long clientId) {
-		// TODO - implement ClientDAO.findById
-		throw new UnsupportedOperationException();
+		return clients.get(clientId);
 	}
 
 	/**
@@ -14,17 +15,15 @@ public class ClientDAO implements DAO<Client> {
 	 * @param client
 	 */
 	public void save(Client client) {
-		// TODO - implement ClientDAO.save
-		throw new UnsupportedOperationException();
+		clients.put(client.getClientId(), client);
 	}
 
 	/**
 	 * 
-	 * @param clientID
+	 * @param clientId
 	 */
-	public void delete(Long clientID) {
-		// TODO - implement ClientDAO.delete
-		throw new UnsupportedOperationException();
+	public void delete(Long clientId) {
+		clients.remove(clientId);
 	}
 
 }

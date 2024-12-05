@@ -1,12 +1,13 @@
-public class DriverDAO implements DAO<Driver> {
+import java.util.Map;
 
+public class DriverDAO implements DAO<Driver> {
+	private final Map<Long, Driver> drivers = InMemoryDataStore.getInstance().getDrivers();
 	/**
 	 * 
 	 * @param driverId
 	 */
 	public Driver findById(Long driverId) {
-		// TODO - implement DriverDAO.findById
-		throw new UnsupportedOperationException();
+		return drivers.get(driverId);
 	}
 
 	/**
@@ -14,8 +15,7 @@ public class DriverDAO implements DAO<Driver> {
 	 * @param driver
 	 */
 	public void save(Driver driver) {
-		// TODO - implement DriverDAO.save
-		throw new UnsupportedOperationException();
+		drivers.put(driver.getDriverId(), driver);
 	}
 
 	/**
@@ -23,13 +23,14 @@ public class DriverDAO implements DAO<Driver> {
 	 * @param driverId
 	 */
 	public void delete(Long driverId) {
-		// TODO - implement DriverDAO.delete
-		throw new UnsupportedOperationException();
+		drivers.remove(driverId);
 	}
 
 	public Driver findAvailable() {
-		// TODO - implement DriverDAO.findAvailable
-		throw new UnsupportedOperationException();
+		return drivers.values().stream()
+				.filter(Driver::isAvailable)
+				.findFirst()
+				.orElse(null);
 	}
 
 }

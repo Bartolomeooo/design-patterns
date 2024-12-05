@@ -1,12 +1,13 @@
-public class VehicleDAO implements DAO<Vehicle> {
+import java.util.Map;
 
+public class VehicleDAO implements DAO<Vehicle> {
+	private final Map<Long, Vehicle> vehicles = InMemoryDataStore.getInstance().getVehicles();
 	/**
 	 * 
 	 * @param vehicleId
 	 */
 	public Vehicle findById(Long vehicleId) {
-		// TODO - implement VehicleDAO.findById
-		throw new UnsupportedOperationException();
+		return vehicles.get(vehicleId);
 	}
 
 	/**
@@ -14,8 +15,7 @@ public class VehicleDAO implements DAO<Vehicle> {
 	 * @param vehicle
 	 */
 	public void save(Vehicle vehicle) {
-		// TODO - implement VehicleDAO.save
-		throw new UnsupportedOperationException();
+		vehicles.put(vehicle.getVehicleId(), vehicle);
 	}
 
 	/**
@@ -23,13 +23,14 @@ public class VehicleDAO implements DAO<Vehicle> {
 	 * @param vehicleId
 	 */
 	public void delete(Long vehicleId) {
-		// TODO - implement VehicleDAO.delete
-		throw new UnsupportedOperationException();
+		vehicles.remove(vehicleId);
 	}
 
 	public Vehicle findAvailable() {
-		// TODO - implement VehicleDAO.findAvailable
-		throw new UnsupportedOperationException();
+		return vehicles.values().stream()
+				.filter(Vehicle::isAvailable)
+				.findFirst()
+				.orElse(null);
 	}
 
 }

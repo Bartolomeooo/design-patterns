@@ -1,30 +1,29 @@
-public class OrderDAO implements DAO<Order> {
+import java.util.Map;
 
+public class OrderDAO implements DAO<Order> {
+	private final Map<Long, Order> orders = InMemoryDataStore.getInstance().getOrders();
 	/**
-	 * 
+	 *
 	 * @param orderId
 	 */
 	public Order findById(Long orderId) {
-		// TODO - implement OrderDAO.findById
-		throw new UnsupportedOperationException();
+		return orders.get(orderId);
 	}
 
 	/**
-	 * 
+	 *
 	 * @param order
 	 */
 	public void save(Order order) {
-		// TODO - implement OrderDAO.save
-		throw new UnsupportedOperationException();
+		orders.put(order.getOrderId(), order);
 	}
 
 	/**
-	 * 
-	 * @param orderID
+	 *
+	 * @param orderId
 	 */
-	public void delete(Long orderID) {
-		// TODO - implement OrderDAO.delete
-		throw new UnsupportedOperationException();
+	public void delete(Long orderId) {
+		orders.remove(orderId);
 	}
 
 	/**

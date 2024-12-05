@@ -10,11 +10,33 @@ public class Order {
 
 	/**
 	 * 
-	 * @param clientId
+	 * @param orderDetails
 	 */
-	public Order(Long clientId) {
-		// TODO - implement Order.Order
-		throw new UnsupportedOperationException();
+	public Order(OrderDetails orderDetails) {
+		this.orderDetails = orderDetails;
 	}
 
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
+	}
+
+	public void setDriver(Driver driver) {
+		this.driver = driver;
+	}
+
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
+	}
+
+	public void setRoute(Route route) {
+		this.route = route;
+	}
+
+	public Long getOrderId() {
+		return orderId;
+	}
 }
