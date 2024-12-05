@@ -1,10 +1,9 @@
 public class DriverService {
 
-	private DAO<Driver> dao;
+	private final DAO<Driver> dao = new DriverDAO();
 
 	public Driver findAvailable() {
-		// TODO - implement DriverService.findAvailable
-		throw new UnsupportedOperationException();
+		return ((DriverDAO) dao).findAvailable();
 	}
 
 }

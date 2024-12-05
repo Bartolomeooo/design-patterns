@@ -1,19 +1,25 @@
 public class OrderService {
 
 	private RoutingStrategy routingStrategy;
-	private ClientService clientService;
-	private DriverService driverService;
-	private VehicleService vehicleService;
-	private DAO<Order> dao;
+	private final ClientService clientService = new ClientService();
+	private final DriverService driverService = new DriverService();
+	private final VehicleService vehicleService = new VehicleService();
+	private DAO<Order> dao = new OrderDAO();
 	private NotificationCreator notificationCreator;
 
 	/**
 	 * 
 	 * @param orderDetails
 	 */
-	public void initializeOrder(OrderDetails orderDetails) {
-		// TODO - implement OrderService.initializeOrder
-		throw new UnsupportedOperationException();
+	public void initializeOrder(Long clientId, OrderDetails orderDetails) {
+		Order order = new Order(orderDetails);
+		assignDriver(order);
+		assignVehicle(order);
+		setStrategy(order);
+		setRoute(order);
+		order.setClient(clientService.findById(clientId));
+		order.setOrderId(1L);
+		dao.save(order);
 	}
 
 	/**
@@ -21,8 +27,7 @@ public class OrderService {
 	 * @param order
 	 */
 	private void assignDriver(Order order) {
-		// TODO - implement OrderService.assignDriver
-		throw new UnsupportedOperationException();
+		order.setDriver(driverService.findAvailable());
 	}
 
 	/**
@@ -30,8 +35,7 @@ public class OrderService {
 	 * @param order
 	 */
 	private void assignVehicle(Order order) {
-		// TODO - implement OrderService.assignVehicle
-		throw new UnsupportedOperationException();
+		order.setVehicle(vehicleService.findAvailable());
 	}
 
 	/**
@@ -39,8 +43,7 @@ public class OrderService {
 	 * @param order
 	 */
 	private void setStrategy(Order order) {
-		// TODO - implement OrderService.setStrategy
-		throw new UnsupportedOperationException();
+		routingStrategy = new FastestRouteStrategy(); // TODO - implement logic
 	}
 
 	/**
@@ -48,8 +51,7 @@ public class OrderService {
 	 * @param order
 	 */
 	private void setRoute(Order order) {
-		// TODO - implement OrderService.setRoute
-		throw new UnsupportedOperationException();
+		order.setRoute(routingStrategy.calculateRoute());
 	}
 
 	public Notification createOrder() {

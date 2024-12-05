@@ -1,6 +1,6 @@
 public class OrderController implements IOrderController {
 
-	private OrderService orderService;
+	private final OrderService orderService = new OrderService();
 
 	/**
 	 * 
@@ -8,8 +8,7 @@ public class OrderController implements IOrderController {
 	 * @param orderDetails
 	 */
 	public void initializeOrder(Long clientId, OrderDetails orderDetails) {
-		// TODO - implement OrderController.initializeOrder
-		throw new UnsupportedOperationException();
+		orderService.initializeOrder(clientId, orderDetails);
 	}
 
 	public Notification createOrder() {

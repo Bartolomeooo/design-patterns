@@ -1,14 +1,12 @@
 public class ClientService {
 
-	private DAO<Client> dao;
+	private DAO<Client> dao = new ClientDAO();
 
 	/**
-	 * 
 	 * @param clientId
 	 */
 	public Client findById(Long clientId) {
-		// TODO - implement ClientService.findById
-		throw new UnsupportedOperationException();
+		return dao.findById(clientId);
 	}
 
 }

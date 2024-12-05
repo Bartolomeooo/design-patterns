@@ -1,10 +1,9 @@
 public class VehicleService {
 
-	private DAO<Vehicle> dao;
+	private DAO<Vehicle> dao = new VehicleDAO();
 
 	public Vehicle findAvailable() {
-		// TODO - implement VehicleService.findAvailable
-		throw new UnsupportedOperationException();
+		return ((VehicleDAO)dao).findAvailable();
 	}
 
 }
