@@ -46,13 +46,19 @@ public class OrderController implements IOrderController {
 	 * @param driverId
 	 */
 	public Order getAssignedOrder(Long driverId) {
-		// TODO - implement OrderController.getAssignedOrder
-		throw new UnsupportedOperationException();
+		return orderService.getAssignedOrder(driverId);
 	}
 
-	public Notification reportProgress() {
-		// TODO - implement OrderController.reportProgress
-		throw new UnsupportedOperationException();
+	public Notification reportProgress(Order order) {
+		return orderService.reportProgress(order);
+	}
+
+	/**
+	 *
+	 * @param order
+	 */
+	public void assignSubstituteVehicle(Order order) {
+		orderService.assignVehicle(order);
 	}
 
 	@Override

@@ -47,4 +47,8 @@ public class Order {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public Long getDriverId() {
+		return driver.getDriverId();
+	}
 }

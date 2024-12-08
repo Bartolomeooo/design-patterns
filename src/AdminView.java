@@ -1,10 +1,11 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdminView implements IAdminView {
 
 	private Long adminId;
 	private IOrderController orderController = new OrderController();
-	private List<NotificationListener> listeners;
+	private List<NotificationListener> listeners = new ArrayList<NotificationListener>();
 
 	/**
 	 *

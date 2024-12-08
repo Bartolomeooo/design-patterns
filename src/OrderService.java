@@ -46,7 +46,7 @@ public class OrderService {
 	 *
 	 * @param order
 	 */
-	private void assignVehicle(Order order) {
+	public void assignVehicle(Order order) {
 		order.setVehicle(vehicleService.findAvailable());
 	}
 
@@ -76,9 +76,10 @@ public class OrderService {
 
 	public Notification createOrder(Order order) {
 		order.setStatus("Active");
-		notificationCreator = new OrderProgressNotificationCreator();
+		notificationCreator = new OrderCreatedNotificationCreator();
 
-		return new OrderCreatedNotification();
+		return notificationCreator.createNotification();
+
 	}
 
 	public Order getPendingOrder() {
@@ -110,21 +111,37 @@ public class OrderService {
 	 * @param driverId
 	 */
 	public Order getAssignedOrder(Long driverId) {
-		// TODO - implement OrderService.getAssignedOrder
-		throw new UnsupportedOperationException();
+		return ((OrderDAO) dao).findByDriverId(driverId);
 	}
 
-	/**
-	 * 
-	 * @param orderId
-	 */
-	public void assignSubstituteVehicle(Long orderId) {
-		// TODO - implement OrderService.assignSubstituteVehicle
-		throw new UnsupportedOperationException();
+	public Notification reportProgress(Order order) {
+		notificationCreator = new OrderProgressNotificationCreator();
+
+		String currentStatus = order.getStatus();
+
+		switch (currentStatus) {
+			case "Active":
+				order.setStatus("Execution Started");
+				break;
+
+			case "Execution Started":
+				order.setStatus("Shipment Confirmed");
+				break;
+
+			case "Shipment Confirmed":
+				order.setStatus("Shipment Received");
+				break;
+
+			case "Shipment Received":
+				order.setStatus("Order Completed");
+				break;
+
+			default:
+				System.out.println("Order already completed");
+				return null;
+		}
+
+		return notificationCreator.createNotification();
 	}
 
-	public Notification reportProgress() {
-		// TODO - implement OrderService.reportProgress
-		throw new UnsupportedOperationException();
-	}
 }

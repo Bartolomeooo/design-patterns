@@ -31,8 +31,10 @@ public class OrderDAO implements DAO<Order> {
 	 * @param driverId
 	 */
 	public Order findByDriverId(Long driverId) {
-		// TODO - implement OrderDAO.findByDriverId
-		throw new UnsupportedOperationException();
+		return orders.values().stream()
+				.filter(order -> driverId.equals(order.getDriverId()))
+				.findFirst()
+				.orElse(null);
 	}
 
 	public Order findFirstPendingOrder() {
