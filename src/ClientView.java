@@ -1,4 +1,3 @@
-import javax.management.Notification;
 import java.time.LocalDateTime;
 
 public class ClientView implements IClientView, NotificationListener {
@@ -37,10 +36,11 @@ public class ClientView implements IClientView, NotificationListener {
 	/**
 	 *
 	 * @param notification
+	 * @param order
 	 */
 	@Override
-	public void notify(Notification notification) {
-
+	public void notify(Notification notification, Order order) {
+		notification.display(order.getStatus());
 	}
 
 

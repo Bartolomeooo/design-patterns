@@ -14,11 +14,13 @@ public class ViewFacade {
 		clientView = new ClientView(clientId);
 		driverView = new DriverView(driverId);
 		adminView = new AdminView(adminId);
+		((AdminView) adminView).addNotificationListener((NotificationListener) clientView);
 	}
 
 	public void initializeOrder() {
 		clientView.initializeOrder();
-		//adminView.createOrder();
+		adminView.createOrder();
+
 	}
 
 	public void reportProgress() {

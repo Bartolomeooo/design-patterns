@@ -1,10 +1,9 @@
-import javax.management.Notification;
-
 public interface NotificationListener {
 
 	/**
 	 * 
 	 * @param notification
+	 * @param order
 	 */
-	void notify(Notification notification);
+	void notify(Notification notification, Order order);
 }

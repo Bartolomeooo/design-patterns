@@ -36,8 +36,10 @@ public class OrderDAO implements DAO<Order> {
 	}
 
 	public Order findFirstPendingOrder() {
-		// TODO - implement OrderDAO.findFirstPendingOrder
-		throw new UnsupportedOperationException();
+		return orders.values().stream()
+				.filter(order -> "Pending".equals(order.getStatus()))
+				.findFirst()
+				.orElse(null);
 	}
 
 }

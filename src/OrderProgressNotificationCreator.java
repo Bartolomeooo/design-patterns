@@ -1,8 +1,8 @@
 public class OrderProgressNotificationCreator extends NotificationCreator {
 
+	@Override
 	public Notification createNotification() {
-		// TODO - implement OrderProgressNotificationCreator.createNotification
-		throw new UnsupportedOperationException();
+		return new OrderProgressNotification();
 	}
 
 }

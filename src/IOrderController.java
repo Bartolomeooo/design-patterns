@@ -1,3 +1,5 @@
+import java.util.List;
+
 public interface IOrderController {
 
 	/**
@@ -7,7 +9,7 @@ public interface IOrderController {
 	 */
 	void initializeOrder(Long clientId, OrderDetails orderDetails);
 
-	Notification createOrder();
+	Notification createOrder(Order order);
 
 	Order getPendingOrder();
 
@@ -32,5 +34,7 @@ public interface IOrderController {
 	Order getAssignedOrder(Long driverId);
 
 	Notification reportProgress();
+
+	void assignVehicle(Order order, Long vehicleId);
 
 }

@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class OrderController implements IOrderController {
 
 	private final OrderService orderService = new OrderService();
@@ -11,14 +13,12 @@ public class OrderController implements IOrderController {
 		orderService.initializeOrder(clientId, orderDetails);
 	}
 
-	public Notification createOrder() {
-		// TODO - implement OrderController.createOrder
-		throw new UnsupportedOperationException();
+	public Notification createOrder(Order order) {
+		return orderService.createOrder(order);
 	}
 
 	public Order getPendingOrder() {
-		// TODO - implement OrderController.getPendingOrder
-		throw new UnsupportedOperationException();
+		return orderService.getPendingOrder();
 	}
 
 	/**
@@ -55,4 +55,8 @@ public class OrderController implements IOrderController {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public void assignVehicle(Order order, Long vehicleId) {
+		orderService.assignVehicle(order, vehicleId);
+	}
 }

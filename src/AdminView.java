@@ -3,11 +3,11 @@ import java.util.List;
 public class AdminView implements IAdminView {
 
 	private Long adminId;
-	private IOrderController orderController;
+	private IOrderController orderController = new OrderController();
 	private List<NotificationListener> listeners;
 
 	/**
-	 * 
+	 *
 	 * @param adminId
 	 */
 	public AdminView(Long adminId) {
@@ -15,35 +15,56 @@ public class AdminView implements IAdminView {
 	}
 
 	public void createOrder() {
+		displayPendingOrder();
+		Order order = orderController.getPendingOrder();
 
+		boolean wantsToModifyAssignedProperties = true;
+		if(wantsToModifyAssignedProperties) {
+			modifyAutomaticalyAssignedProperties(order);
+		}
+
+		notifyListeners(orderController.createOrder(order), order);
 	}
 
-	private void modifyAutomaticalyAssignedProperties() {
-		// TODO - implement AdminView.modifyAutomaticalyAssignedProperties
-		throw new UnsupportedOperationException();
+	private void modifyAutomaticalyAssignedProperties(Order order) {
+		boolean wantsToModifyAssignedVehicle = true;
+		if(wantsToModifyAssignedVehicle) {
+			Long newVehicleId = 2L;
+			orderController.assignVehicle(order, newVehicleId);
+		}
+
+		boolean wantsToModifyAssignedDriver = false;
+		if(wantsToModifyAssignedDriver) {
+			//Long newDriverId = 2L;
+			//orderController.assignDriver(order, newDriverId);
+		}
 	}
 
 	private void displayPendingOrder() {
-		// TODO - implement AdminView.displayPendingOrder
-		throw new UnsupportedOperationException();
+		Order pendingOrder = orderController.getPendingOrder();
+		if (pendingOrder != null) {
+			System.out.println("Oczekujące zamówienie:");
+			System.out.println(pendingOrder);
+		} else {
+			System.out.println("Brak oczekujących zamówień.");
+		}
 	}
 
 	/**
-	 * 
+	 *
 	 * @param listener
 	 */
 	public void addNotificationListener(NotificationListener listener) {
-		// TODO - implement AdminView.addNotificationListener
-		throw new UnsupportedOperationException();
+		listeners.add(listener);
 	}
 
 	/**
-	 * 
+	 *
 	 * @param notification
 	 */
-	public void notifyListeners(Notification notification) {
-		// TODO - implement AdminView.notifyListeners
-		throw new UnsupportedOperationException();
+	public void notifyListeners(Notification notification, Order order) {
+		for (NotificationListener listener : listeners) {
+			listener.notify(notification, order);
+		}
 	}
-
 }

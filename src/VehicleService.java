@@ -6,4 +6,8 @@ public class VehicleService {
 		return ((VehicleDAO)dao).findAvailable();
 	}
 
+	public Vehicle findById(Long vehicleId) {
+		return  dao.findById(vehicleId);
+	}
+
 }
