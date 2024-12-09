@@ -51,4 +51,8 @@ public class Order {
 	public Long getDriverId() {
 		return driver.getDriverId();
 	}
+
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
 }

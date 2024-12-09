@@ -47,7 +47,9 @@ public class OrderService {
 	 * @param order
 	 */
 	public void assignVehicle(Order order) {
-		order.setVehicle(vehicleService.findAvailable());
+		Vehicle vehicle = vehicleService.findAvailable();
+		order.setVehicle(vehicle);
+		vehicle.setAvailable(false);
 	}
 
 	/**
@@ -55,7 +57,9 @@ public class OrderService {
 	 * @param order
 	 */
 	public void assignVehicle(Order order, Long vehicleId) {
-		order.setVehicle(vehicleService.findById(vehicleId));
+		Vehicle vehicle = vehicleService.findById(vehicleId);
+		order.setVehicle(vehicle);
+		vehicle.setAvailable(false);
 	}
 
 	/**
@@ -99,11 +103,10 @@ public class OrderService {
 
 	/**
 	 * 
-	 * @param orderId
+	 * @param order
 	 */
-	public void cancelOrder(Long orderId) {
-		// TODO - implement OrderService.cancelOrder
-		throw new UnsupportedOperationException();
+	public void cancelOrder(Order order) {
+		dao.delete(order.getOrderId());
 	}
 
 	/**
@@ -111,7 +114,7 @@ public class OrderService {
 	 * @param driverId
 	 */
 	public Order getAssignedOrder(Long driverId) {
-		return ((OrderDAO) dao).findByDriverId(driverId);
+		return ((OrderDAO) dao).findByDriverId(driverId, "Active");
 	}
 
 	public Notification reportProgress(Order order) {
@@ -138,6 +141,7 @@ public class OrderService {
 
 			default:
 				System.out.println("Order already completed");
+				order.getVehicle().setAvailable(true);
 				return null;
 		}
 

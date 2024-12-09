@@ -18,4 +18,8 @@ public class Vehicle {
 	public Long getId() {
 		return vehicleId;
 	}
+
+	public void setAvailable(boolean available) {
+		isAvailable = available;
+	}
 }

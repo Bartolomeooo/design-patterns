@@ -24,9 +24,4 @@ public class OrderDetails {
 		// TODO - implement OrderDetails.areValid
 		throw new UnsupportedOperationException();
 	}
-
-	public Double calculateCost() {
-		return cargoWeight * cost; // to be deleted
-	}
-
 }

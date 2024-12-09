@@ -23,9 +23,9 @@ public interface IOrderController {
 
 	/**
 	 * 
-	 * @param orderId
+	 * @param order
 	 */
-	void cancelOrder(Long orderId);
+	void cancelOrder(Order order);
 
 	/**
 	 * 

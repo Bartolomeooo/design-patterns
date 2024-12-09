@@ -5,7 +5,7 @@ public class AdminView implements IAdminView {
 
 	private Long adminId;
 	private IOrderController orderController = new OrderController();
-	private List<NotificationListener> listeners = new ArrayList<NotificationListener>();
+	private List<NotificationListener> listeners = new ArrayList<>();
 
 	/**
 	 *
@@ -18,6 +18,11 @@ public class AdminView implements IAdminView {
 	public void createOrder() {
 		displayPendingOrder();
 		Order order = orderController.getPendingOrder();
+
+		boolean wantsToCancelOrderBasedOnOrderDetails = false;
+		if (wantsToCancelOrderBasedOnOrderDetails) {
+			orderController.cancelOrder(order);
+		}
 
 		boolean wantsToModifyAssignedProperties = true;
 		if(wantsToModifyAssignedProperties) {

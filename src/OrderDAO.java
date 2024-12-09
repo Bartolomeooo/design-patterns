@@ -37,11 +37,23 @@ public class OrderDAO implements DAO<Order> {
 				.orElse(null);
 	}
 
+	/**
+	 *
+	 * @param driverId
+	 * @param status
+	 */
+	public Order findByDriverId(Long driverId, String status) {
+		return orders.values().stream()
+				.filter(order -> driverId.equals(order.getDriverId()))
+				.filter(order -> status.equals(order.getStatus()))
+				.findFirst()
+				.orElse(null);
+	}
+
 	public Order findFirstPendingOrder() {
 		return orders.values().stream()
 				.filter(order -> "Pending".equals(order.getStatus()))
 				.findFirst()
 				.orElse(null);
 	}
-
 }

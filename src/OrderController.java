@@ -34,11 +34,10 @@ public class OrderController implements IOrderController {
 
 	/**
 	 * 
-	 * @param orderId
+	 * @param order
 	 */
-	public void cancelOrder(Long orderId) {
-		// TODO - implement OrderController.cancelOrder
-		throw new UnsupportedOperationException();
+	public void cancelOrder(Order order) {
+		orderService.cancelOrder(order);
 	}
 
 	/**

@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class DriverView implements IDriverView {
 
 	private Long driverId;
@@ -15,6 +17,12 @@ public class DriverView implements IDriverView {
 		Order order = orderController.getAssignedOrder(driverId);
 
 		displayOrder(order);
+
+		do {
+			Scanner scanner = new Scanner(System.in);
+			scanner.nextLine();
+
+		}
 		boolean isCarProblem = true;
 		if (isCarProblem) reportProblem(order); // Two loop iterations 'cause we don't have any user input
 
@@ -34,5 +42,4 @@ public class DriverView implements IDriverView {
 	private void reportProblem(Order order) {
 		orderController.assignSubstituteVehicle(order);
 	}
-
 }
