@@ -14,25 +14,33 @@ public class DriverView implements IDriverView {
 	}
 
 	public void reportProgress() {
+		System.out.println("Driver's view: ");
+		Scanner scanner = new Scanner(System.in);
+
 		Order order = orderController.getAssignedOrder(driverId);
 
-		displayOrder(order);
+		while (true) {
+			displayOrder(order);
 
-		do {
-			Scanner scanner = new Scanner(System.in);
-			scanner.nextLine();
+			System.out.println("Czy chcesz zgłosić problem z samochodem? (tak/nie):");
+			String userInput = scanner.nextLine().trim().toLowerCase();
 
+			if ("tak".equals(userInput)) {
+				reportProblem(order);
+				System.out.println("Problem zgłoszony.");
+			} else if ("nie".equals(userInput)) {
+				System.out.println("Brak problemów z samochodem. Przechodzimy dalej.");
+				break;
+			} else {
+				System.out.println("Nieprawidłowa odpowiedź. Wpisz 'tak' lub 'nie'.");
+			}
 		}
-		boolean isCarProblem = true;
-		if (isCarProblem) reportProblem(order); // Two loop iterations 'cause we don't have any user input
-
-		displayOrder(order);
-		isCarProblem = false;
-		if (isCarProblem) reportProblem(order);
 
 		for (int i = 0; i < 4; i++) {
 			orderController.reportProgress(order).display(order.getStatus());
 		}
+
+		scanner.close();
 	}
 
 	private void displayOrder(Order order) {

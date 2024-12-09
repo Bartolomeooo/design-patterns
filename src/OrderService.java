@@ -1,3 +1,5 @@
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrderService {
@@ -58,8 +60,9 @@ public class OrderService {
 	 */
 	public void assignVehicle(Order order, Long vehicleId) {
 		Vehicle vehicle = vehicleService.findById(vehicleId);
+		order.getVehicle().setAvailable(true); // Previous vehicle
 		order.setVehicle(vehicle);
-		vehicle.setAvailable(false);
+		vehicle.setAvailable(false); // New assigned vehicle
 	}
 
 	/**
@@ -75,7 +78,14 @@ public class OrderService {
 	 * @param order
 	 */
 	private void setStrategy(Order order) {
-		routingStrategy = new FastestRouteStrategy(); // TODO - implement logic
+		LocalDateTime pickupTime = order.getOrderDetails().getDeliveryDateTime();
+		LocalDateTime deliveryTime = order.getOrderDetails().getDeliveryDateTime();
+		Duration timeToDelivery = Duration.between(pickupTime, deliveryTime);
+
+		if (timeToDelivery.toHours() < 3) routingStrategy = new FastestRouteStrategy();
+		else {
+			routingStrategy = new ShortestDistanceStrategy();
+		}
 	}
 
 	public Notification createOrder(Order order) {

@@ -55,4 +55,21 @@ public class Order {
 	public Vehicle getVehicle() {
 		return vehicle;
 	}
+
+	public OrderDetails getOrderDetails() {
+		return orderDetails;
+	}
+
+	@Override
+	public String toString() {
+		return "Order{" +
+				"orderId=" + orderId +
+				", client=" + (client != null ? client.getClientId() : "null") +
+				", orderDetails=" + (orderDetails != null ? orderDetails.toString() : "null") +
+				", driver=" + (driver != null ? driver.getDriverId() : "null") +
+				", vehicle=" + (vehicle != null ? vehicle.getVehicleId() : "null") +
+				", route=" + (route != null ? route.getDescription(): "null") +
+				", status='" + status + '\'' +
+				'}';
+	}
 }

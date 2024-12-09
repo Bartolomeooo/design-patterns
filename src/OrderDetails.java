@@ -24,4 +24,25 @@ public class OrderDetails {
 		// TODO - implement OrderDetails.areValid
 		throw new UnsupportedOperationException();
 	}
+
+	public LocalDateTime getDeliveryDateTime() {
+		return deliveryDateTime;
+	}
+
+	public LocalDateTime getPickupDateTime() {
+		return pickupDateTime;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderDetails{" +
+				"pickupLocation='" + pickupLocation + '\'' +
+				", deliveryLocation='" + deliveryLocation + '\'' +
+				", cargoType='" + cargoType + '\'' +
+				", pickupDateTime=" + pickupDateTime +
+				", deliveryDateTime=" + deliveryDateTime +
+				", cargoWeight=" + cargoWeight +
+				", cost=" + cost +
+				'}';
+	}
 }

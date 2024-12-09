@@ -6,6 +6,7 @@ public class ClientView implements IClientView, NotificationListener {
 	private IOrderController orderController = new OrderController();;
 
 	public void initializeOrder() {
+		System.out.println("Client's view: ");
 		orderController.initializeOrder(clientId, enterOrderDetails());
 	}
 

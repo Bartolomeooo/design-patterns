@@ -9,6 +9,7 @@ public class Driver {
 		this.isAvailable = isAvailable;
 		this.name = name;
 	}
+
 	public Long getDriverId() {
 		return driverId;
 	}
@@ -24,4 +25,5 @@ public class Driver {
 	public String getName() {
 		return name;
 	}
+
 }

@@ -16,6 +16,7 @@ public class AdminView implements IAdminView {
 	}
 
 	public void createOrder() {
+		System.out.println("Admin's view: ");
 		displayPendingOrder();
 		Order order = orderController.getPendingOrder();
 

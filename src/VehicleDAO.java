@@ -32,5 +32,4 @@ public class VehicleDAO implements DAO<Vehicle> {
 				.findFirst()
 				.orElse(null);
 	}
-
 }
