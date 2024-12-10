@@ -1,6 +1,5 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class OrderService {
 
@@ -8,7 +7,7 @@ public class OrderService {
 	private final ClientService clientService = new ClientService();
 	private final DriverService driverService = new DriverService();
 	private final VehicleService vehicleService = new VehicleService();
-	private DAO<Order> dao = new OrderDAO();
+	private final DAO<Order> dao = new OrderDAO();
 	private NotificationCreator notificationCreator;
 
 	/**
@@ -32,7 +31,9 @@ public class OrderService {
 	 * @param order
 	 */
 	private void assignDriver(Order order) {
-		order.setDriver(driverService.findAvailable());
+		Driver driver = driverService.findAvailable();
+		driver.setAvailable(false);
+		order.setDriver(driver);
 	}
 
 	/**
@@ -78,8 +79,9 @@ public class OrderService {
 	 * @param order
 	 */
 	private void setStrategy(Order order) {
-		LocalDateTime pickupTime = order.getOrderDetails().getDeliveryDateTime();
-		LocalDateTime deliveryTime = order.getOrderDetails().getDeliveryDateTime();
+		OrderDetails orderDetails = order.getOrderDetails();
+		LocalDateTime pickupTime = orderDetails.getPickupDateTime();
+		LocalDateTime deliveryTime = orderDetails.getDeliveryDateTime();
 		Duration timeToDelivery = Duration.between(pickupTime, deliveryTime);
 
 		if (timeToDelivery.toHours() < 3) routingStrategy = new FastestRouteStrategy();
@@ -93,7 +95,6 @@ public class OrderService {
 		notificationCreator = new OrderCreatedNotificationCreator();
 
 		return notificationCreator.createNotification();
-
 	}
 
 	public Order getPendingOrder() {
@@ -116,7 +117,7 @@ public class OrderService {
 	 * @param order
 	 */
 	public void cancelOrder(Order order) {
-		dao.delete(order.getOrderId());
+		order.setStatus("Canceled");
 	}
 
 	/**
