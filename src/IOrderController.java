@@ -35,7 +35,9 @@ public interface IOrderController {
 
 	Notification reportProgress(Order order);
 
-	void assignVehicle(Order order, Long vehicleId);
+	void replaceVehicle(Order order, Long vehicleId);
+
+	void replaceDriver(Order order, Long driverId);
 
 	void assignSubstituteVehicle(Order order);
 }

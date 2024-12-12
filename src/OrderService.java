@@ -41,8 +41,11 @@ public class OrderService {
 	 * @param order
 	 * @param driverId
 	 */
-	private void assignDriver(Order order, Long driverId) {
-		order.setDriver(driverService.findById(driverId));
+	public void replaceDriver(Order order, Long driverId) {
+		Driver driver = driverService.findById(driverId);
+		order.getDriver().setAvailable(true); // Previous driver
+		order.setDriver(driver);
+		driver.setAvailable(false); // New assigned driver
 	}
 
 	/**
@@ -59,7 +62,7 @@ public class OrderService {
 	 *
 	 * @param order
 	 */
-	public void assignVehicle(Order order, Long vehicleId) {
+	public void replaceVehicle(Order order, Long vehicleId) {
 		Vehicle vehicle = vehicleService.findById(vehicleId);
 		order.getVehicle().setAvailable(true); // Previous vehicle
 		order.setVehicle(vehicle);

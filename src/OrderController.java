@@ -61,7 +61,12 @@ public class OrderController implements IOrderController {
 	}
 
 	@Override
-	public void assignVehicle(Order order, Long vehicleId) {
-		orderService.assignVehicle(order, vehicleId);
+	public void replaceVehicle(Order order, Long vehicleId) {
+		orderService.replaceVehicle(order, vehicleId);
+	}
+
+	@Override
+	public void replaceDriver(Order order, Long driverId) {
+		orderService.replaceDriver(order, driverId);
 	}
 }

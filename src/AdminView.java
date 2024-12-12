@@ -37,13 +37,13 @@ public class AdminView implements IAdminView {
 		boolean wantsToModifyAssignedVehicle = true;
 		if(wantsToModifyAssignedVehicle) {
 			Long newVehicleId = 2L;
-			orderController.assignVehicle(order, newVehicleId);
+			orderController.replaceVehicle(order, newVehicleId);
 		}
 
 		boolean wantsToModifyAssignedDriver = false;
 		if(wantsToModifyAssignedDriver) {
-			//Long newDriverId = 2L;
-			//orderController.assignDriver(order, newDriverId);
+			Long newDriverId = 2L;
+			orderController.replaceDriver(order, newDriverId);
 		}
 	}
 
