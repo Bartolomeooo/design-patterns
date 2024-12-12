@@ -142,11 +142,11 @@ public class OrderService {
 				break;
 
 			case "Execution Started":
-				order.setStatus("Shipment Confirmed");
+				order.setStatus("Conformity confirmed");
 				break;
 
 			case "Shipment Confirmed":
-				order.setStatus("Shipment Received");
+				order.setStatus("Shipment Started");
 				break;
 
 			case "Shipment Received":

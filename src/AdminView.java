@@ -50,10 +50,10 @@ public class AdminView implements IAdminView {
 	private void displayPendingOrder() {
 		Order pendingOrder = orderController.getPendingOrder();
 		if (pendingOrder != null) {
-			System.out.println("Oczekujące zamówienie:");
+			System.out.println("Pending order:");
 			System.out.println(pendingOrder);
 		} else {
-			System.out.println("Brak oczekujących zamówień.");
+			System.out.println("No pending orders.");
 		}
 	}
 
