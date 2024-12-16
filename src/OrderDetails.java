@@ -20,11 +20,6 @@ public class OrderDetails {
 		this.cost = cargoWeight * 10.0;
 	}
 
-	public boolean areValid() {
-		// TODO - implement OrderDetails.areValid
-		throw new UnsupportedOperationException();
-	}
-
 	public LocalDateTime getDeliveryDateTime() {
 		return deliveryDateTime;
 	}
