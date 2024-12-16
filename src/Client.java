@@ -4,6 +4,12 @@ public class Client {
 	private String name;
 	private String phoneNumber;
 
+	/**
+	 *
+	 * @param clientId
+	 * @param name
+	 * @param phoneNumber
+	 */
 	public Client(Long clientId, String name, String phoneNumber) {
 		this.clientId = clientId;
 		this.name = name;

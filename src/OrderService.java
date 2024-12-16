@@ -11,7 +11,8 @@ public class OrderService {
 	private NotificationCreator notificationCreator;
 
 	/**
-	 * 
+	 *
+	 * @param clientId
 	 * @param orderDetails
 	 */
 	public void initializeOrder(Long clientId, OrderDetails orderDetails) {
@@ -43,7 +44,7 @@ public class OrderService {
 	 */
 	public void replaceDriver(Order order, Long driverId) {
 		Driver driver = driverService.findById(driverId);
-		order.getDriver().setAvailable(true); // Previous driver
+		order.getDriver().setAvailable(true); // Current driver
 		order.setDriver(driver);
 		driver.setAvailable(false); // New assigned driver
 	}
@@ -61,10 +62,11 @@ public class OrderService {
 	/**
 	 *
 	 * @param order
+	 * @param vehicleId
 	 */
 	public void replaceVehicle(Order order, Long vehicleId) {
 		Vehicle vehicle = vehicleService.findById(vehicleId);
-		order.getVehicle().setAvailable(true); // Previous vehicle
+		order.getVehicle().setAvailable(true); // Current vehicle
 		order.setVehicle(vehicle);
 		vehicle.setAvailable(false); // New assigned vehicle
 	}
@@ -87,10 +89,9 @@ public class OrderService {
 		LocalDateTime deliveryTime = orderDetails.getDeliveryDateTime();
 		Duration timeToDelivery = Duration.between(pickupTime, deliveryTime);
 
-		if (timeToDelivery.toHours() < 3) routingStrategy = new FastestRouteStrategy();
-		else {
-			routingStrategy = new ShortestDistanceStrategy();
-		}
+		routingStrategy = timeToDelivery.toHours() < 3 ?
+				new FastestRouteStrategy() :
+				new ShortestDistanceStrategy();
 	}
 
 	public Notification createOrder(Order order) {
@@ -102,17 +103,6 @@ public class OrderService {
 
 	public Order getPendingOrder() {
 		return ((OrderDAO) dao).findFirstPendingOrder();
-	}
-
-	/**
-	 * 
-	 * @param driverId
-	 * @param vehicleId
-	 * @param routeDescription
-	 */
-	public void modifyAutomaticalyAssignedProperties(Long driverId, Long vehicleId, Long routeDescription) {
-		// TODO - implement OrderService.modifyAutomaticalyAssignedProperties
-		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -145,21 +135,17 @@ public class OrderService {
 				order.setStatus("Conformity confirmed");
 				break;
 
-			case "Shipment Confirmed":
+			case "Conformity confirmed":
 				order.setStatus("Shipment Started");
 				break;
 
-			case "Shipment Received":
+			case "Shipment Started":
 				order.setStatus("Order Completed");
-				break;
-
-			default:
-				System.out.println("Order already completed");
 				order.getVehicle().setAvailable(true);
-				return null;
+				order.getDriver().setAvailable(true);
+				break;
 		}
 
 		return notificationCreator.createNotification();
 	}
-
 }

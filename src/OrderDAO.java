@@ -27,17 +27,6 @@ public class OrderDAO implements DAO<Order> {
 	}
 
 	/**
-	 * 
-	 * @param driverId
-	 */
-	public Order findByDriverId(Long driverId) {
-		return orders.values().stream()
-				.filter(order -> driverId.equals(order.getDriverId()))
-				.findFirst()
-				.orElse(null);
-	}
-
-	/**
 	 *
 	 * @param driverId
 	 * @param status

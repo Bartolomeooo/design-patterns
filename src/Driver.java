@@ -4,6 +4,12 @@ public class Driver {
 	private boolean isAvailable;
 	private String name;
 
+	/**
+	 *
+	 * @param driverId
+	 * @param isAvailable
+	 * @param name
+	 */
 	public Driver(Long driverId, boolean isAvailable, String name) {
 		this.driverId = driverId;
 		this.isAvailable = isAvailable;

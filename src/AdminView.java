@@ -33,6 +33,10 @@ public class AdminView implements IAdminView {
 		notifyListeners(orderController.createOrder(order), order);
 	}
 
+	/**
+	 *
+	 * @param order
+	 */
 	private void modifyAutomaticalyAssignedProperties(Order order) {
 		boolean wantsToModifyAssignedVehicle = true;
 		if(wantsToModifyAssignedVehicle) {
@@ -68,6 +72,7 @@ public class AdminView implements IAdminView {
 	/**
 	 *
 	 * @param notification
+	 * @param order
 	 */
 	public void notifyListeners(Notification notification, Order order) {
 		for (NotificationListener listener : listeners) {

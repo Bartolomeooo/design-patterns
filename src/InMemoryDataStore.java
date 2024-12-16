@@ -46,12 +46,12 @@ public class InMemoryDataStore {
     private void initializeVehicles() {
         vehicles.put(1L, new Vehicle(1L, true));
         vehicles.put(2L, new Vehicle(2L, true));
-        vehicles.put(3L, new Vehicle(3L, false));
+        vehicles.put(3L, new Vehicle(3L, true));
     }
 
     private void initializeClients() {
         clients.put(1L, new Client(1L, "Jan", "523423465"));
         clients.put(2L, new Client(2L, "Bogdan", "780980345"));
-        clients.put(3L, new Client(3L, "Janusz", "567897234"));
+        clients.put(3L, new Client(3L, "Paweł", "567897234"));
     }
 }

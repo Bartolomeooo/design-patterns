@@ -15,14 +15,6 @@ public interface IOrderController {
 
 	/**
 	 * 
-	 * @param driverId
-	 * @param vehicleId
-	 * @param routeDescription
-	 */
-	void modifyAutomaticalyAssignedProperties(Long driverId, Long vehicleId, Long routeDescription);
-
-	/**
-	 * 
 	 * @param order
 	 */
 	void cancelOrder(Order order);

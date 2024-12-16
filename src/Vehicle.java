@@ -3,6 +3,11 @@ public class Vehicle {
 	private Long vehicleId;
 	private boolean isAvailable;
 
+	/**
+	 *
+	 * @param vehicleId
+	 * @param isAvailable
+	 */
 	public Vehicle(Long vehicleId, boolean isAvailable) {
 		this.vehicleId = vehicleId;
 		this.isAvailable = isAvailable;

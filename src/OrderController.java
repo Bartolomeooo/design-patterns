@@ -23,17 +23,6 @@ public class OrderController implements IOrderController {
 
 	/**
 	 * 
-	 * @param driverId
-	 * @param vehicleId
-	 * @param routeDescription
-	 */
-	public void modifyAutomaticalyAssignedProperties(Long driverId, Long vehicleId, Long routeDescription) {
-		// TODO - implement OrderController.modifyAutomaticalyAssignedProperties
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
 	 * @param order
 	 */
 	public void cancelOrder(Order order) {
@@ -48,6 +37,10 @@ public class OrderController implements IOrderController {
 		return orderService.getAssignedOrder(driverId);
 	}
 
+	/**
+	 *
+	 * @param order
+	 */
 	public Notification reportProgress(Order order) {
 		return orderService.reportProgress(order);
 	}
@@ -60,11 +53,21 @@ public class OrderController implements IOrderController {
 		orderService.assignVehicle(order);
 	}
 
+	/**
+	 *
+	 * @param order
+	 * @param vehicleId
+	 */
 	@Override
 	public void replaceVehicle(Order order, Long vehicleId) {
 		orderService.replaceVehicle(order, vehicleId);
 	}
 
+	/**
+	 *
+	 * @param order
+	 * @param driverId
+	 */
 	@Override
 	public void replaceDriver(Order order, Long driverId) {
 		orderService.replaceDriver(order, driverId);
