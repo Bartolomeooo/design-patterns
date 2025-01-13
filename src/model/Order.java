@@ -23,6 +23,10 @@ public class Order {
 	}
 
 	public void setOrderId(Long orderId) {
+		if (orderId == null) {
+			throw new IllegalArgumentException("OrderId cannot be null");
+		}
+
 		this.orderId = orderId;
 	}
 

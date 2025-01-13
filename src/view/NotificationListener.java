@@ -1,4 +1,4 @@
-package view;
+package org.example.view;
 
 import model.Order;
 import presenter.Notification;

@@ -4,6 +4,7 @@ import model.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 public class OrderService {
 
@@ -20,6 +21,10 @@ public class OrderService {
 	 * @param orderDetails
 	 */
 	public void initializeOrder(Long clientId, OrderDetails orderDetails) {
+		if (orderDetails == null) {
+			throw new IllegalArgumentException("OrderDetails cannot be null!");
+		}
+
 		Order order = new Order(orderDetails);
 		assignDriver(order);
 		assignVehicle(order);
@@ -37,6 +42,11 @@ public class OrderService {
 	 */
 	private void assignDriver(Order order) {
 		Driver driver = driverService.findAvailable();
+
+		if (driver == null) {
+			throw new IllegalStateException("No available driver!");
+		}
+
 		driver.setAvailable(false);
 		order.setDriver(driver);
 	}
@@ -48,6 +58,9 @@ public class OrderService {
 	 */
 	public void replaceDriver(Order order, Long driverId) {
 		Driver driver = driverService.findById(driverId);
+		if (driver == null) {
+			throw new NoSuchElementException("Driver with ID " + driverId + " not found!");
+		}
 		order.getDriver().setAvailable(true); // Current driver
 		order.setDriver(driver);
 		driver.setAvailable(false); // New assigned driver
@@ -59,6 +72,9 @@ public class OrderService {
 	 */
 	public void assignVehicle(Order order) {
 		Vehicle vehicle = vehicleService.findAvailable();
+		if (vehicle == null) {
+			throw new IllegalStateException("No available vehicle!");
+		}
 		order.setVehicle(vehicle);
 		vehicle.setAvailable(false);
 	}
@@ -70,6 +86,9 @@ public class OrderService {
 	 */
 	public void replaceVehicle(Order order, Long vehicleId) {
 		Vehicle vehicle = vehicleService.findById(vehicleId);
+		if (vehicle == null) {
+			throw new NoSuchElementException("Vehicle with ID " + vehicleId + " not found!");
+		}
 		order.getVehicle().setAvailable(true); // Current vehicle
 		order.setVehicle(vehicle);
 		vehicle.setAvailable(false); // New assigned vehicle
@@ -99,6 +118,10 @@ public class OrderService {
 	}
 
 	public Notification createOrder(Order order) {
+		if (order == null) {
+			throw new IllegalArgumentException("Order cannot be null when creating!");
+		}
+
 		order.setStatus("Active");
 		notificationCreator = new OrderCreatedNotificationCreator();
 
@@ -114,6 +137,10 @@ public class OrderService {
 	 * @param order
 	 */
 	public void cancelOrder(Order order) {
+		if (order == null) {
+			throw new IllegalArgumentException("Cannot cancel a null Order!");
+		}
+
 		order.setStatus("Canceled");
 	}
 
@@ -126,6 +153,10 @@ public class OrderService {
 	}
 
 	public Notification reportProgress(Order order) {
+		if (order == null) {
+			throw new IllegalArgumentException("Cannot report progress on null!");
+		}
+
 		notificationCreator = new OrderProgressNotificationCreator();
 
 		String currentStatus = order.getStatus();

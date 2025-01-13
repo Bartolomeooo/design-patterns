@@ -1,4 +1,4 @@
-package view;
+package org.example.view;
 
 public class ViewFacade {
 
