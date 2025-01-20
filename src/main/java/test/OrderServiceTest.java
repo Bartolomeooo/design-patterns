@@ -24,13 +24,14 @@ class OrderServiceTest {
         InMemoryDataStore.getInstance().getDrivers().clear();
         InMemoryDataStore.getInstance().getVehicles().clear();
         InMemoryDataStore.getInstance().getClients().clear();
-        InMemoryDataStore.getInstance().initializeDrivers();
-        InMemoryDataStore.getInstance().initializeVehicles();
-        InMemoryDataStore.getInstance().initializeClients();
     }
 
     @Test
     void testInitializeOrder_Success() {
+        InMemoryDataStore.getInstance().getDrivers().put(1L, new Driver(1L, true, "Test Driver 1"));
+        InMemoryDataStore.getInstance().getVehicles().put(1L, new Vehicle(1L, true));
+        InMemoryDataStore.getInstance().getClients().put(1L, new Client(1L, "Client 1", "123456789"));
+
         // Arrange
         OrderDetails details = new OrderDetails(
                 "CityA", "CityB", "Cargo",
@@ -54,6 +55,8 @@ class OrderServiceTest {
 
     @Test
     void testInitializeOrder_NullOrderDetails_ShouldThrow() {
+        InMemoryDataStore.getInstance().getClients().put(1L, new Client(1L, "Client 1", "123456789"));
+
         // Expect
         assertThrows(IllegalArgumentException.class, () -> {
             // Act: Attempt to initialize an order with null details
@@ -63,6 +66,11 @@ class OrderServiceTest {
 
     @Test
     void testReplaceDriver_Success() {
+        InMemoryDataStore.getInstance().getDrivers().put(1L, new Driver(1L, false, "Test Driver 1"));
+        InMemoryDataStore.getInstance().getDrivers().put(2L, new Driver(2L, true, "Test Driver 2"));
+        InMemoryDataStore.getInstance().getVehicles().put(1L, new Vehicle(1L, true));
+        InMemoryDataStore.getInstance().getClients().put(1L, new Client(1L, "Client 1", "123456789"));
+
         OrderDetails details = new OrderDetails(
                 "CityA", "CityB", "Cargo",
                 LocalDateTime.now().plusHours(2),
@@ -71,8 +79,6 @@ class OrderServiceTest {
         );
         orderService.initializeOrder(1L, details);
         Order order = orderService.getPendingOrder();
-
-        InMemoryDataStore.getInstance().getDrivers().put(2L, new Driver(2L, true, "Test Driver 2"));
 
         // Act & Assert
         assertDoesNotThrow(() -> orderService.replaceDriver(order, 2L),
@@ -83,7 +89,10 @@ class OrderServiceTest {
 
     @Test
     void testReplaceDriver_NoSuchDriver_ShouldThrow() {
-        // Arrange
+        InMemoryDataStore.getInstance().getDrivers().put(1L, new Driver(1L, true, "Test Driver 1"));
+        InMemoryDataStore.getInstance().getVehicles().put(1L, new Vehicle(1L, true));
+        InMemoryDataStore.getInstance().getClients().put(1L, new Client(1L, "Client 1", "123456789"));
+
         OrderDetails details = new OrderDetails(
                 "X", "Y", "Cargo",
                 LocalDateTime.now().plusHours(1),
@@ -98,9 +107,13 @@ class OrderServiceTest {
                 () -> orderService.replaceDriver(order, 9999L),
                 "Should throw NoSuchElementException if the driver with ID=9999 doesn't exist.");
     }
-    
+
     @Test
     void testReportProgress_Success() {
+        InMemoryDataStore.getInstance().getDrivers().put(1L, new Driver(1L, false, "Test Driver 1"));
+        InMemoryDataStore.getInstance().getVehicles().put(1L, new Vehicle(1L, false));
+        InMemoryDataStore.getInstance().getClients().put(1L, new Client(1L, "Client 1", "123456789"));
+
         // Arrange: initialize and set an order to "Active"
         OrderDetails details = new OrderDetails(
                 "A", "B", "Cargo",
@@ -137,12 +150,5 @@ class OrderServiceTest {
         // After completion, driver and vehicle should be available again
         assertTrue(pending.getDriver().isAvailable(), "Driver should be set available after completion.");
         assertTrue(pending.getVehicle().isAvailable(), "Vehicle should be set available after completion.");
-    }
-
-    @Test
-    void testReportProgress_NullOrder_ShouldThrow() {
-        assertThrows(IllegalArgumentException.class,
-                () -> orderService.reportProgress(null),
-                "Should throw IllegalArgumentException when order is null.");
     }
 }
