@@ -37,7 +37,7 @@ class CombinedJMockitTests {
     }
 
     /**
-     * Test 1: reportProgress(...) with mocks (Mockito)
+     * Test 1: reportProgress() with mocks (Mockito)
      * Verifies order status transitions and checks driver/vehicle availability updates.
      */
     @Test
