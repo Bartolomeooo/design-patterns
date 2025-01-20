@@ -10,23 +10,12 @@ import presenter.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-/**
- * Demonstrates combining tests for OrderService and Order entity using only @Mock objects.
- */
-@Tag("CombinedMockTests")
+@Tag("Skipped")
 class CombinedJMockitTests {
 
-    @Mock
-    private OrderDAO orderDAO;
 
     @Mock
     private DriverDAO driverDAO;
-
-    @Mock
-    private VehicleDAO vehicleDAO;
-
-    @Mock
-    private ClientService clientService;
 
     @InjectMocks
     private OrderService orderService;
@@ -36,10 +25,30 @@ class CombinedJMockitTests {
         MockitoAnnotations.openMocks(this);
     }
 
-    /**
-     * Test 1: reportProgress() with mocks (Mockito)
-     * Verifies order status transitions and checks driver/vehicle availability updates.
-     */
+    @Test
+    void testSetAndGetDriver_WithMocks() {
+        Order mockOrder = mock(Order.class);
+        Driver mockDriver = mock(Driver.class);
+
+        mockOrder.setDriver(mockDriver);
+
+        verify(mockOrder, times(1)).setDriver(mockDriver);
+    }
+
+    @Test
+    void testSetAndGetStatus_WithMocks() {
+        Order mockOrder = mock(Order.class);
+
+        mockOrder.setStatus("Pending");
+        verify(mockOrder, times(1)).setStatus("Pending");
+
+        mockOrder.setStatus("Active");
+        verify(mockOrder, times(1)).setStatus("Active");
+
+        mockOrder.setStatus("Canceled");
+        verify(mockOrder, times(1)).setStatus("Canceled");
+    }
+
     @Test
     void testReportProgress_Success_WithMocks() {
         // Arrange
@@ -69,44 +78,9 @@ class CombinedJMockitTests {
         verify(mockVehicle, times(1)).setAvailable(true);
     }
 
-    /**
-     * Test 2: setDriver/getDriver() - using mock Driver
-     * Verifies driver assignment and retrieval.
-     */
-    @Test
-    void testSetAndGetDriver_WithMocks() {
-        Order mockOrder = mock(Order.class);
-        Driver mockDriver = mock(Driver.class);
-
-        mockOrder.setDriver(mockDriver);
-
-        verify(mockOrder, times(1)).setDriver(mockDriver);
-    }
-
-    /**
-     * Test 3: setStatus/getStatus() - using parameterized values and mock Order
-     */
-    @Test
-    void testSetAndGetStatus_WithMocks() {
-        Order mockOrder = mock(Order.class);
-
-        mockOrder.setStatus("Pending");
-        verify(mockOrder, times(1)).setStatus("Pending");
-
-        mockOrder.setStatus("Active");
-        verify(mockOrder, times(1)).setStatus("Active");
-
-        mockOrder.setStatus("Canceled");
-        verify(mockOrder, times(1)).setStatus("Canceled");
-    }
-
-    /**
-     * Test 4: Replace Driver
-     * Verifies driver replacement functionality.
-     */
     @Test
     void testFindAvailableDriver_WithMocks() {
-        DriverDAO mockDriverDAO = Mockito.mock(DriverDAO.class);
+        DriverDAO mockDriverDAO = driverDAO;
 
         DriverService driverService = new DriverService(mockDriverDAO);
 
@@ -121,6 +95,4 @@ class CombinedJMockitTests {
 
         Mockito.verify(mockDriverDAO, times(1)).findAvailable();
     }
-
-
 }

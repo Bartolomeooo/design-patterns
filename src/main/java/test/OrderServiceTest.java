@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Tag("Control")
+@Tag("Order")
 class OrderServiceTest {
 
     private OrderService orderService;
@@ -29,12 +29,6 @@ class OrderServiceTest {
         InMemoryDataStore.getInstance().initializeClients();
     }
 
-    /**
-     * Test 1: initializeOrder()
-     *
-     * Checks if a new Order can be properly initialized with a non-null OrderDetails
-     * and an existing client. Expects the Order to be saved as "Pending".
-     */
     @Test
     void testInitializeOrder_Success() {
         // Arrange
@@ -58,9 +52,6 @@ class OrderServiceTest {
         assertEquals(1L, created.getOrderId());
     }
 
-    /**
-     * Checks if initializeOrder() throws an exception when provided with null OrderDetails.
-     */
     @Test
     void testInitializeOrder_NullOrderDetails_ShouldThrow() {
         // Expect
@@ -70,16 +61,8 @@ class OrderServiceTest {
         }, "Should throw IllegalArgumentException for null OrderDetails.");
     }
 
-    /**
-     * Test 2: replaceDriver()
-     *
-     * Verifies the successful scenario of swapping drivers and checks that no exception is thrown
-     * if the new driver exists in the data store.
-     */
     @Test
     void testReplaceDriver_Success() {
-        // Arrange
-        InMemoryDataStore.getInstance().getDrivers().put(2L, new Driver(2L, true, "Test Driver 2"));
         OrderDetails details = new OrderDetails(
                 "CityA", "CityB", "Cargo",
                 LocalDateTime.now().plusHours(2),
@@ -89,7 +72,8 @@ class OrderServiceTest {
         orderService.initializeOrder(1L, details);
         Order order = orderService.getPendingOrder();
 
-        // Assume that driver with ID=2 also exists in the InMemoryDataStore.
+        InMemoryDataStore.getInstance().getDrivers().put(2L, new Driver(2L, true, "Test Driver 2"));
+
         // Act & Assert
         assertDoesNotThrow(() -> orderService.replaceDriver(order, 2L),
                 "Replacing driver with ID=2 should not throw if the driver exists.");
@@ -97,9 +81,6 @@ class OrderServiceTest {
                 "The new driver's ID should now be 2 after replacement.");
     }
 
-    /**
-     * Checks if replaceDriver() throws NoSuchElementException when the driver ID does not exist.
-     */
     @Test
     void testReplaceDriver_NoSuchDriver_ShouldThrow() {
         // Arrange
@@ -117,14 +98,7 @@ class OrderServiceTest {
                 () -> orderService.replaceDriver(order, 9999L),
                 "Should throw NoSuchElementException if the driver with ID=9999 doesn't exist.");
     }
-
-    /**
-     * Test 3: reportProgress()
-     *
-     * Validates the workflow of an order through these statuses:
-     *  Active -> Execution Started -> Conformity confirmed -> Shipment Started -> Order Completed
-     * Also checks that a vehicle and driver are released after completion (isAvailable = true).
-     */
+    
     @Test
     void testReportProgress_Success() {
         // Arrange: initialize and set an order to "Active"
@@ -165,9 +139,6 @@ class OrderServiceTest {
         assertTrue(pending.getVehicle().isAvailable(), "Vehicle should be set available after completion.");
     }
 
-    /**
-     * Ensures that reportProgress() throws IllegalArgumentException when the order is null.
-     */
     @Test
     void testReportProgress_NullOrder_ShouldThrow() {
         assertThrows(IllegalArgumentException.class,

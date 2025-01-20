@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import model.Driver;
 import model.Order;
 
-@Tag("Entity")
+@Tag("Order")
 class OrderTest {
 
     private Order order;
@@ -43,14 +43,14 @@ class OrderTest {
 
     @Test
     void testToString() {
-        // Set some fields to check if toString() provides correct output
+        // Set some fields
         order.setOrderId(999L);
         order.setDriver(driver);
         order.setStatus("Pending");
 
         String text = order.toString();
 
-        // Verify that certain fragments are included in the string representation
+        // Verify that certain fragments are included
         assertTrue(text.contains("orderId=999"), "toString() should contain the correct Order ID.");
         assertTrue(text.contains("driver=101"), "toString() should display the driver's ID.");
         assertTrue(text.contains("status='Pending'"), "toString() should include the 'Pending' status.");
